@@ -203,8 +203,10 @@ void logic()
         y= y+10;
         break;
     }
-    setfillstyle(1,15);
-    bar(x,y,x+10,y+10);
+    setfillstyle(1,15); //Head color
+    bar(x,y,x+10,y+10); // Head
+    
+    // Body color and drawing
     for(k=0; k<ntail; k++)
     {
         setfillstyle(1,7);
