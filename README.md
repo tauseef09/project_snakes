@@ -9,4 +9,5 @@ Tasks completed:
 Tasks remaining:
 1. Second snake
 2. Round implementation
-3. UI
+3. Final gameover condition.
+4. UI
