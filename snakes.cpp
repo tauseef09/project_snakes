@@ -10,21 +10,23 @@ using namespace std;
 bool gameOver;
 int width = 640;
 int height = 480;
-int x, y, i, j, k, score, fruitx, fruity, dir, d;
-int tailx[1000], taily[1000];
+int x, y, x1, y1, i, j, k, score, fruitx, fruity, dir, d, d2, dirP2;
+int tailx[1000], taily[1000], tailx1[5], taily1[5];
 int ntail;
-enum eDirection {STOP=0, LEFT, RIGHT, UP, DOWN};
-enum eDirection dirP2;
+
+void logic2();
 
 void setup()
 {
     //srand(time(0));
     gameOver = false;
-    dirP2 = STOP;
+    dirP2 = 0;
     dir=0;
     d=0;
     x = width/2;
     y = height/2;
+    x1 = (width/2)+50;
+    y1 = (height/2)+50;
     fruitx = (rand()%(width-10));
     fruity = (rand()%(height-10));
     score=0;
@@ -203,33 +205,33 @@ void logic()
         y= y+10;
         break;
     }
-    setfillstyle(1,15); //Head color
+    setfillstyle(1,15); // Head color
     bar(x,y,x+10,y+10); // Head
-    
+
     // Body color and drawing
     for(k=0; k<ntail; k++)
     {
         setfillstyle(1,7);
         bar(tailx[k],taily[k], tailx[k]+10, taily[k]+10);
     }
-    delay(100);
+    // delay(100);
 
     // boundary check
-    if(x<20)
+    if(x<10)
     {
-        x=width-20;
+        x=width-10;
     }
-    else if(x>=width-20)
+    else if(x>=width-10)
     {
-        x=20;
+        x=10;
     }
-    if(y<20)
+    if(y<10)
     {
-        y=height-20;
+        y=height-10;
     }
-    else if(y>=height-20)
+    else if(y>=height-10)
     {
-        y=20;
+        y=10;
     }
 
     // Game over condition
@@ -237,11 +239,176 @@ void logic()
     {
         if(tailx[i]==x && taily[i]==y)
         {
-            gameOver = true;
+            ntail=1;
         }
     }
 
 }
+
+
+ void input2()
+    {
+         //Second movement
+    if(GetAsyncKeyState(0x44))
+    {
+        if(d2==2)
+        {
+            d2=2;
+
+        }
+        else
+        {
+            d2=1;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x41))
+    {
+        if(d2==1)
+        {
+            d2=1;
+
+        }
+        else
+        {
+            d2=2;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x57))
+    {
+        if(d2==4)
+        {
+            d2=4;
+
+        }
+        else
+        {
+            d2=3;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x53))
+    {
+        if(d2==3)
+        {
+            d2=3;
+
+        }
+        else
+        {
+            d2=4;
+        }
+
+    }
+    }
+
+
+void logic2()
+    {
+        //second
+        int prevx2 = tailx1[0];
+        int prevy2 = taily1[0];
+        int prevtempx1, prevtempy1;
+        tailx1[0] = x1;
+        taily1[0] = y1;
+        for(i=1; i<4; i++)
+        {
+            prevtempx1 = prevx2;
+            prevtempy1 = prevy2;
+            prevx2 = tailx1[i];
+            prevy2 = taily1[i];
+            tailx1[i] = prevtempx1;
+            taily1[i] = prevtempy1;
+        }
+
+        switch(d2)
+        {
+        case 0:
+            if(dirP2==1)
+            {
+                x1=x1+10;
+            }
+            else if(dirP2==2)
+            {
+                x1=x1-10;
+            }
+            else if(dirP2==3)
+            {
+                y1=y1-10;
+            }
+            else if(dirP2==4)
+            {
+                y1=y1+10;
+            }
+            else
+            {
+                d2=0;
+            }
+            break;
+        case 1:
+            if(dirP2==2)
+            {
+                break;
+            }
+            x1=x1+10;
+            dirP2=1;
+            break;
+        case 2:
+            if(dirP2==1)
+            {
+                break;
+            }
+            x1= x1-10;
+            dirP2=2;
+            break;
+        case 3:
+            if(dirP2==4)
+            {
+                break;
+            }
+            dirP2=3;
+            y1=y1-10;
+            break;
+        case 4:
+            if(dirP2==3)
+            {
+                break;
+            }
+            dirP2=4;
+            y1= y1+10;
+            break;
+        }
+        setfillstyle(1,15);
+        bar(x1,y1,x1+10,y1+10);
+        for(k=0; k<4; k++)
+        {
+            setfillstyle(1,7);
+            bar(tailx1[k],taily1[k], tailx1[k]+10, taily1[k]+10);
+        }
+        delay(40);
+
+
+
+        // boundary check
+        if(x1<10)
+        {
+            x1=width-10;
+        }
+        else if(x1>=width-10)
+        {
+            x1=10;
+        }
+        if(y1<10)
+        {
+            y1=height-10;
+        }
+        else if(y1>=height-10)
+        {
+            y1=10;
+        }
+    }
+
 
 int main()
 {
@@ -249,13 +416,14 @@ int main()
     initgraph(&gdriver, &gmode, NULL);
 
     setup();
-    while(!gameOver)
-    {
-        draw();
-        input();
-        logic();
+   while(!gameOver)
+        {
+            draw();
+            input2();
+            input();
+            logic();
+            logic2();
 
-    }
+        }
 
 }
-
