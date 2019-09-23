@@ -5,9 +5,9 @@ Tasks completed:
 3. Boundary check
 4. Collision
 5. One of two gameover condtions 
+6. Second snake
 
 Tasks remaining:
-1. Second snake
-2. Round implementation
-3. Final gameover condition.
-4. UI
+1. Round implementation
+2. UI
+3. Info and score management 
