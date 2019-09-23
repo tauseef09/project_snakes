@@ -25,8 +25,8 @@ void setup()
     d=0;
     x = width/2;
     y = height/2;
-    x1 = (width/2)+50;
-    y1 = (height/2)+50;
+    x1 = (width/2)+150;
+    y1 = (height/2)+150;
     fruitx = (rand()%(width-10));
     fruity = (rand()%(height-10));
     score=0;
@@ -49,7 +49,6 @@ void draw()
     if((fruitx>=x && fruitx<=x+10) &&(fruity>=y && fruity<=y+10))
     {
 
-        score=score+1;
         ntail++;
         setfillstyle(1,0);
         bar(fruitx, fruity, fruitx+7, fruity+7);
@@ -65,6 +64,23 @@ void draw()
         fruity=fruity/10;
         fruity=fruity*10;
 
+    }
+    else if((fruitx>=x1 && fruitx<=x1+10) &&(fruity>=y1 && fruity<=y1+10))
+    {
+        score=score+1;
+        setfillstyle(1,0);
+        bar(fruitx, fruity, fruitx+7, fruity+7);
+
+        do
+        {
+            fruitx = (rand()%(width-10));
+            fruity = (rand()%(height-10));
+        }
+        while(getpixel(fruitx,fruity)!=0 && fruitx > 10 && fruity > 10);
+        fruitx=fruitx/10;
+        fruitx=fruitx*10;
+        fruity=fruity/10;
+        fruity=fruity*10;
     }
     setfillstyle(1,4);
     bar(fruitx, fruity, fruitx+7, fruity+7);
@@ -246,9 +262,9 @@ void logic()
 }
 
 
- void input2()
-    {
-         //Second movement
+void input2()
+{
+    //Second movement
     if(GetAsyncKeyState(0x44))
     {
         if(d2==2)
@@ -301,113 +317,132 @@ void logic()
         }
 
     }
-    }
+}
 
 
 void logic2()
+{
+    //second
+    int prevx2 = tailx1[0];
+    int prevy2 = taily1[0];
+    int prevtempx1, prevtempy1;
+    tailx1[0] = x1;
+    taily1[0] = y1;
+    for(i=1; i<4; i++)
     {
-        //second
-        int prevx2 = tailx1[0];
-        int prevy2 = taily1[0];
-        int prevtempx1, prevtempy1;
-        tailx1[0] = x1;
-        taily1[0] = y1;
-        for(i=1; i<4; i++)
-        {
-            prevtempx1 = prevx2;
-            prevtempy1 = prevy2;
-            prevx2 = tailx1[i];
-            prevy2 = taily1[i];
-            tailx1[i] = prevtempx1;
-            taily1[i] = prevtempy1;
-        }
+        prevtempx1 = prevx2;
+        prevtempy1 = prevy2;
+        prevx2 = tailx1[i];
+        prevy2 = taily1[i];
+        tailx1[i] = prevtempx1;
+        taily1[i] = prevtempy1;
+    }
 
-        switch(d2)
+    switch(d2)
+    {
+    case 0:
+        if(dirP2==1)
         {
-        case 0:
-            if(dirP2==1)
-            {
-                x1=x1+10;
-            }
-            else if(dirP2==2)
-            {
-                x1=x1-10;
-            }
-            else if(dirP2==3)
-            {
-                y1=y1-10;
-            }
-            else if(dirP2==4)
-            {
-                y1=y1+10;
-            }
-            else
-            {
-                d2=0;
-            }
-            break;
-        case 1:
-            if(dirP2==2)
-            {
-                break;
-            }
             x1=x1+10;
-            dirP2=1;
-            break;
-        case 2:
-            if(dirP2==1)
-            {
-                break;
-            }
-            x1= x1-10;
-            dirP2=2;
-            break;
-        case 3:
-            if(dirP2==4)
-            {
-                break;
-            }
-            dirP2=3;
+        }
+        else if(dirP2==2)
+        {
+            x1=x1-10;
+        }
+        else if(dirP2==3)
+        {
             y1=y1-10;
+        }
+        else if(dirP2==4)
+        {
+            y1=y1+10;
+        }
+        else
+        {
+            d2=0;
+        }
+        break;
+    case 1:
+        if(dirP2==2)
+        {
             break;
-        case 4:
-            if(dirP2==3)
-            {
-                break;
-            }
-            dirP2=4;
-            y1= y1+10;
+        }
+        x1=x1+10;
+        dirP2=1;
+        break;
+    case 2:
+        if(dirP2==1)
+        {
             break;
         }
-        setfillstyle(1,15);
-        bar(x1,y1,x1+10,y1+10);
-        for(k=0; k<4; k++)
+        x1= x1-10;
+        dirP2=2;
+        break;
+    case 3:
+        if(dirP2==4)
         {
-            setfillstyle(1,7);
-            bar(tailx1[k],taily1[k], tailx1[k]+10, taily1[k]+10);
+            break;
         }
-        delay(40);
+        dirP2=3;
+        y1=y1-10;
+        break;
+    case 4:
+        if(dirP2==3)
+        {
+            break;
+        }
+        dirP2=4;
+        y1= y1+10;
+        break;
+    }
+    setfillstyle(1,15);
+    bar(x1,y1,x1+10,y1+10);
+    for(k=0; k<2; k++)
+    {
+        setfillstyle(1,7);
+        bar(tailx1[k],taily1[k], tailx1[k]+10, taily1[k]+10);
+    }
+    delay(60);
 
 
 
-        // boundary check
-        if(x1<10)
+    // boundary check
+    if(x1<10)
+    {
+        x1=width-10;
+    }
+    else if(x1>=width-10)
+    {
+        x1=10;
+    }
+    if(y1<10)
+    {
+        y1=height-10;
+    }
+    else if(y1>=height-10)
+    {
+        y1=10;
+    }
+
+
+
+    // GameOver Conditions [Collision mechanics]
+    for(i=0; i<ntail; i++)
+    {
+        if((tailx[i]==x1 && taily[i]==y1) || (x==x1 && y==y1))
         {
-            x1=width-10;
-        }
-        else if(x1>=width-10)
-        {
-            x1=10;
-        }
-        if(y1<10)
-        {
-            y1=height-10;
-        }
-        else if(y1>=height-10)
-        {
-            y1=10;
+            gameOver=true;
         }
     }
+
+    for(i=0; i<2; i++)
+    {
+        if ((tailx1[i]==x && taily1[i]==y) || (x==x1 && y==y1))
+        {
+            gameOver=true;
+        }
+    }
+}
 
 
 int main()
@@ -416,14 +451,14 @@ int main()
     initgraph(&gdriver, &gmode, NULL);
 
     setup();
-   while(!gameOver)
-        {
-            draw();
-            input2();
-            input();
-            logic();
-            logic2();
+    while(!gameOver)
+    {
+        draw();
+        input2();
+        input();
+        logic();
+        logic2();
 
-        }
+    }
 
 }
