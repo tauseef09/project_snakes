@@ -14,8 +14,6 @@ int x, y, x1, y1, i, j, k, score, fruitx, fruity, dir, d, d2, dirP2;
 int tailx[1000], taily[1000], tailx1[5], taily1[5];
 int ntail;
 
-void logic2();
-
 void setup()
 {
     //srand(time(0));
@@ -449,15 +447,24 @@ int main()
 {
     int gdriver = DETECT, gmode;
     initgraph(&gdriver, &gmode, NULL);
+    int page=0;
 
     setup();
     while(!gameOver)
     {
+        // Double buffer pt.1
+        setactivepage(page);
+        setvisualpage(1-page);
+
         draw();
         input2();
         input();
         logic();
         logic2();
+
+
+        // Double buffer pt.2
+        page=1-page;
 
     }
 
