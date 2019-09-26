@@ -4,12 +4,15 @@
 #include<stdlib.h>
 #include<dos.h>
 #include<time.h>
+#include<windows.h>
+#include<iostream>
+#include<string>
 
 using namespace std;
 
 bool gameOver;
-int width = 640;
-int height = 480;
+int width = 1000;
+int height = 560;
 int x, y, x1, y1, i, j, k, score, fruitx, fruity, dir, d, d2, dirP2;
 int tailx[1000], taily[1000], tailx1[5], taily1[5];
 int ntail;
@@ -21,12 +24,13 @@ void setup()
     dirP2 = 0;
     dir=0;
     d=0;
+    d2=0;
     x = width/2;
     y = height/2;
-    x1 = (width/2)+150;
-    y1 = (height/2)+150;
-    fruitx = (rand()%(width-10));
-    fruity = (rand()%(height-10));
+    x1 = (width/2)+100;
+    y1 = (height/2)+100;
+    fruitx = (1+rand()%(width-10));
+    fruity = (1+rand()%(height-10));
     score=0;
 }
 
@@ -34,14 +38,15 @@ void draw()
 {
     // Resetting the screen
     setfillstyle(1,0);
-    bar(10,10,630,470);
+    bar(10,10,width-10,height-10);
+    bar(0,height-10,width+10,height+10); // Debugger reset bar
 
     // Boundaries
     setfillstyle(1,8);
-    bar(0,0,640,10); // top bar
-    bar(0,0,10,480); // left bar
-    bar(0,480,640,470); // bottom bar
-    bar(630,10,640,480); // right bar
+    bar(0,0,width,10); // top bar
+    bar(0,0,10,height); // left bar
+    bar(0,height,width,height-10); // bottom bar
+    bar(width-10,10,width,height); // right bar
 
     // fruit
     if((fruitx>=x && fruitx<=x+10) &&(fruity>=y && fruity<=y+10))
@@ -53,8 +58,8 @@ void draw()
 
         do
         {
-            fruitx = (rand()%(width-10));
-            fruity = (rand()%(height-10));
+            fruitx = (1+rand()%(width-10));
+            fruity = (1+rand()%(height-10));
         }
         while(getpixel(fruitx,fruity)!=0 && fruitx > 10 && fruity > 10);
         fruitx=fruitx/10;
@@ -71,8 +76,8 @@ void draw()
 
         do
         {
-            fruitx = (rand()%(width-10));
-            fruity = (rand()%(height-10));
+            fruitx = (1+rand()%(width-10));
+            fruity = (1+rand()%(height-10));
         }
         while(getpixel(fruitx,fruity)!=0 && fruitx > 10 && fruity > 10);
         fruitx=fruitx/10;
@@ -443,10 +448,25 @@ void logic2()
 }
 
 
+void displayScore()
+{
+    char a[100];
+    sprintf(a, "SCORE: %d", score);
+    settextstyle(3,0,8);
+    outtextxy(300, 600, a);
+}
+
+
 int main()
 {
     int gdriver = DETECT, gmode;
     initgraph(&gdriver, &gmode, NULL);
+
+    // Full screen game play
+    DWORD screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    DWORD screenHeight = GetSystemMetrics(SM_CYSCREEN);
+    initwindow(screenWidth, screenHeight, "");
+
     int page=0;
 
     setup();
@@ -461,6 +481,13 @@ int main()
         input();
         logic();
         logic2();
+        displayScore();
+
+        // Endgame condition
+        if(GetAsyncKeyState(VK_ESCAPE))
+        {
+            return 0;
+        }
 
 
         // Double buffer pt.2
@@ -469,3 +496,4 @@ int main()
     }
 
 }
+
