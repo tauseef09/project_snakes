@@ -15,8 +15,8 @@ typedef char option[15];
 //Menu Global Item#define pixTOrc(x) (8*(x-1))  //convert pixel into row and col format#define INC 5  //Increment Distance Between Menu Items#define ROW 15 //Row Value for Menu Item#define COL 8 //Column Value for Menu Item#define MAXITEM 4 //Total menu items// To display the Inventory Main menu options
 option mainMenu[]= {
   "START",
-  "HELP",
- "SAVE",
+  "PROFILES",
+ "HELP",
  "CLOSE"
 };
 
@@ -107,7 +107,7 @@ int control_menu()
         choice = menu();
         switch (choice)
         {
-           case'1':    //New
+           case'1':    //Start
                return 1;
                // setcolor(BLUE);
                 //outtextxy(pixTOrc(40),pixTOrc(75),"New");
@@ -118,7 +118,7 @@ int control_menu()
                 //advertise();
                 //break;
 
-           case'2':    //Open
+           case'2':    //Help
                return 2;
                 //setcolor(BLUE);
                 //outtextxy(pixTOrc(40),pixTOrc(15),"Open");
@@ -129,7 +129,7 @@ int control_menu()
                // advertise();
                // break;
 
-           case'3':    //Save
+           case'3':    //Profiles
                return 3;
                 //setcolor(BLUE);
                 //outtextxy(pixTOrc(40),pixTOrc(15),"Save");
@@ -150,7 +150,7 @@ int control_menu()
                 advertise(); */
                 //break;
 
-           case'5':    //Close the program
+           case'5':    //Close
                return 5;
                // setcolor(BLUE);
               //  outtextxy(pixTOrc(40),pixTOrc(15),"CLOSE");
