@@ -12,7 +12,7 @@
 using namespace std;
 
 bool gameOver;
-int width = 1000;
+int width = 1180;
 int height = 560;
 int x, y, x1, y1, i, j, k, score, fruitx, fruity, dir, d, d2, dirP2;
 int tailx[1000], taily[1000], tailx1[5], taily1[5];
@@ -20,7 +20,7 @@ int ntail;
 
 void setup()
 {
-    //srand(time(0));
+    srand(time(0));
     gameOver = false;
     dirP2 = 0;
     dir=0;
@@ -30,8 +30,8 @@ void setup()
     y = height/2;
     x1 = (width/2)+100;
     y1 = (height/2)+100;
-    fruitx = (1+rand()%(width-10));
-    fruity = (1+rand()%(height-10));
+    fruitx = (190+rand()%(width-190));
+    fruity = (1+rand()%(height-20));
     score=0;
 }
 
@@ -39,14 +39,15 @@ void draw()
 {
     // Resetting the screen
     setfillstyle(1,0);
-    bar(10,10,width-10,height-10);
-    bar(0,height-10,width+10,height+10); // Debugger reset bar
+    bar(180,10,width-10,height-10);
+    bar(180,height-10,width+10,height+10); // Debugger reset bar
+    bar(0,0,10,10);
 
     // Boundaries
     setfillstyle(1,8);
-    bar(0,0,width,10); // top bar
-    bar(0,0,10,height); // left bar
-    bar(0,height,width,height-10); // bottom bar
+    bar(180,0,width,10); // top bar
+    bar(180,0,190,height); // left bar
+    bar(180,height,width,height-10); // bottom bar
     bar(width-10,10,width,height); // right bar
 
     // fruit
@@ -59,10 +60,10 @@ void draw()
 
         do
         {
-            fruitx = (1+rand()%(width-10));
-            fruity = (1+rand()%(height-10));
+            fruitx = (190+rand()%(width-190));
+            fruity = (1+rand()%(height-20));
         }
-        while(getpixel(fruitx,fruity)!=0 && fruitx > 10 && fruity > 10);
+        while(getpixel(fruitx,fruity)!=0 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
         fruitx=fruitx*10;
         fruity=fruity/10;
@@ -77,10 +78,10 @@ void draw()
 
         do
         {
-            fruitx = (1+rand()%(width-10));
-            fruity = (1+rand()%(height-10));
+            fruitx = (190+rand()%(width-190));
+            fruity = (1+rand()%(height-20));
         }
-        while(getpixel(fruitx,fruity)!=0 && fruitx > 10 && fruity > 10);
+        while(getpixel(fruitx,fruity)!=0 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
         fruitx=fruitx*10;
         fruity=fruity/10;
@@ -237,13 +238,13 @@ void logic()
     // delay(100);
 
     // boundary check
-    if(x<10)
+    if(x<190)
     {
         x=width-10;
     }
     else if(x>=width-10)
     {
-        x=10;
+        x=180;
     }
     if(y<10)
     {
@@ -411,13 +412,13 @@ void logic2()
 
 
     // boundary check
-    if(x1<10)
+    if(x1<190)
     {
         x1=width-10;
     }
     else if(x1>=width-10)
     {
-        x1=10;
+        x1=180;
     }
     if(y1<10)
     {
