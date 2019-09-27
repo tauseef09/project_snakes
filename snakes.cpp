@@ -38,10 +38,12 @@ void setup()
 void draw()
 {
     // Resetting the screen
-    setfillstyle(1,0);
+    setfillstyle(1,15);
     bar(180,10,width-10,height-10);
+    setfillstyle(1,0);
     bar(180,height-10,width+10,height+10); // Debugger reset bar
-    bar(0,0,10,10);
+    setfillstyle(1,0);
+    bar(0,0,10,10); // Debugger reset bar 2
 
     // Boundaries
     setfillstyle(1,8);
@@ -55,7 +57,7 @@ void draw()
     {
 
         ntail++;
-        setfillstyle(1,0);
+        setfillstyle(1,15);
         bar(fruitx, fruity, fruitx+7, fruity+7);
 
         do
@@ -63,7 +65,7 @@ void draw()
             fruitx = (190+rand()%(width-190));
             fruity = (1+rand()%(height-20));
         }
-        while(getpixel(fruitx,fruity)!=0 && fruitx>190 && fruity>10);
+        while(getpixel(fruitx,fruity)!=15 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
         fruitx=fruitx*10;
         fruity=fruity/10;
@@ -73,7 +75,7 @@ void draw()
     else if((fruitx>=x1 && fruitx<=x1+10) &&(fruity>=y1 && fruity<=y1+10))
     {
         score=score+1;
-        setfillstyle(1,0);
+        setfillstyle(1,15);
         bar(fruitx, fruity, fruitx+7, fruity+7);
 
         do
@@ -81,13 +83,13 @@ void draw()
             fruitx = (190+rand()%(width-190));
             fruity = (1+rand()%(height-20));
         }
-        while(getpixel(fruitx,fruity)!=0 && fruitx>190 && fruity>10);
+        while(getpixel(fruitx,fruity)!=15 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
         fruitx=fruitx*10;
         fruity=fruity/10;
         fruity=fruity*10;
     }
-    setfillstyle(1,4);
+    setfillstyle(1,0);
     bar(fruitx, fruity, fruitx+7, fruity+7);
 
 }
@@ -226,13 +228,13 @@ void logic()
         y= y+10;
         break;
     }
-    setfillstyle(1,15); // Head color
+    setfillstyle(1,8); // Head color
     bar(x,y,x+10,y+10); // Head
 
     // Body color and drawing
     for(k=0; k<ntail; k++)
     {
-        setfillstyle(1,7);
+        setfillstyle(1,10);
         bar(tailx[k],taily[k], tailx[k]+10, taily[k]+10);
     }
     // delay(100);
@@ -240,7 +242,7 @@ void logic()
     // boundary check
     if(x<190)
     {
-        x=width-10;
+        x=width-20;
     }
     else if(x>=width-10)
     {
@@ -400,11 +402,11 @@ void logic2()
         y1= y1+10;
         break;
     }
-    setfillstyle(1,15);
+    setfillstyle(1,12);
     bar(x1,y1,x1+10,y1+10);
     for(k=0; k<2; k++)
     {
-        setfillstyle(1,7);
+        setfillstyle(1,12);
         bar(tailx1[k],taily1[k], tailx1[k]+10, taily1[k]+10);
     }
     delay(60);
@@ -414,7 +416,7 @@ void logic2()
     // boundary check
     if(x1<190)
     {
-        x1=width-10;
+        x1=width-20;
     }
     else if(x1>=width-10)
     {
@@ -455,7 +457,7 @@ void displayScore()
     char a[100];
     sprintf(a, "SCORE: %d", score);
     settextstyle(3,0,8);
-    outtextxy(300, 600, a);
+    outtextxy(500, 600, a);
 }
 
 
@@ -467,7 +469,7 @@ int main()
     // Full screen game play
     DWORD screenWidth = GetSystemMetrics(SM_CXSCREEN);
     DWORD screenHeight = GetSystemMetrics(SM_CYSCREEN);
-    initwindow(screenWidth, screenHeight, "");
+    initwindow(screenWidth, screenHeight, "", -3, -3);
 
     int check = control_menu();
     if(check==1)
