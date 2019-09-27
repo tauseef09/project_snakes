@@ -12,7 +12,7 @@
 
 typedef char option[15];
 
-//Menu Global Item#define pixTOrc(x) (8*(x-1))  //convert pixel into row and col format#define INC 5  //Increment Distance Between Menu Items#define ROW 15 //Row Value for Menu Item#define COL 8 //Column Value for Menu Item#define MAXITEM 4 //Total menu items// To display the Inventory Main menu options
+//Menu Global Item #define pixTOrc(x) (8*(x-1))  //convert pixel into row and col format #define INC 5  //Increment Distance Between Menu Items #define ROW 15 //Row Value for Menu Item #define COL 8 //Column Value for Menu Item#define MAXITEM 4 //Total menu items// To display the Inventory Main menu options
 option mainMenu[]= {
   "START",
   "PROFILES",
@@ -22,7 +22,7 @@ option mainMenu[]= {
 
 
 
-// Function to displays all the menu prompt messages from the pointer array of option a[]void normalvideo(int x,int y,char *str)
+// Function to displays all the menu prompt messages from the pointer array of option a[]
 void normalvideo(int x,int y,char *str)
 {
     x=pixTOrc(x);
@@ -88,13 +88,7 @@ char menu()
     return(i+49);
 }
 
-//void advertise(){
-  //  setcolor(BLUE);
-   // outtextxy(pixTOrc(30),pixTOrc(20),"Syntax-Example.com");
-   // setcolor(LIGHTRED);
-//}
-
-/* The function is used to display the main menu*///Actual code for all the menu utility resides in this//Function...void control_menu()
+/* The function is used to display the main menu */
 int control_menu()
 {
     setfillstyle(SOLID_FILL,WHITE);
@@ -109,60 +103,23 @@ int control_menu()
         {
            case'1':    //Start
                return 1;
-               // setcolor(BLUE);
-                //outtextxy(pixTOrc(40),pixTOrc(75),"New");
-                //advertise();
                 getch();
-                //setfillstyle(SOLID_FILL,LIGHTGRAY);
-                //bar(pixTOrc(28),pixTOrc(14),pixTOrc(75),pixTOrc(50));
-                //advertise();
-                //break;
+
 
            case'2':    //Help
                return 2;
-                //setcolor(BLUE);
-                //outtextxy(pixTOrc(40),pixTOrc(15),"Open");
-                //advertise();
-                //getch();
-                //setfillstyle(SOLID_FILL,LIGHTGRAY);
-                //bar(pixTOrc(28),pixTOrc(14),pixTOrc(75),pixTOrc(50));
-               // advertise();
-               // break;
+
 
            case'3':    //Profiles
                return 3;
-                //setcolor(BLUE);
-                //outtextxy(pixTOrc(40),pixTOrc(15),"Save");
-                //advertise();
-                //getch();
-                //setfillstyle(SOLID_FILL,LIGHTGRAY);
-                //bar(pixTOrc(28),pixTOrc(14),pixTOrc(75),pixTOrc(50));
-                //advertise();
-                //break;
+
 
            case'4':    //Modify the status of item in inventory
-               /* setcolor(BLUE);
-                outtextxy(pixTOrc(40),pixTOrc(15),"About Me");
-                //advertise();
-                getch();
-                setfillstyle(SOLID_FILL,WHITE);
-                bar(pixTOrc(28),pixTOrc(14),pixTOrc(75),pixTOrc(50));
-                advertise(); */
-                //break;
+
 
            case'5':    //Close
                return 5;
-               // setcolor(BLUE);
-              //  outtextxy(pixTOrc(40),pixTOrc(15),"CLOSE");
-               // advertise();
-               // delay(1000);
-               // setfillstyle(SOLID_FILL,LIGHTGRAY);
-                //bar(pixTOrc(28),pixTOrc(14),pixTOrc(75),pixTOrc(50));
-                //advertise();
-                //goto out;
-                //break;
+
        }
       } while (choice != MAXITEM);
-       // out:
 }
-
