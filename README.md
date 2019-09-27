@@ -1,6 +1,6 @@
 # project_snakes
 Tasks completed:
-1. Initial snake built
+1. Initial snake build
 2. Food coordinates and randomization
 3. Boundary check
 4. Collision
