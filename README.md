@@ -7,7 +7,8 @@ Tasks completed:
 5. Gameover condtions
 6. Second snake
 7. UI
+8. Info and score management 
 
 Tasks remaining:
 1. Round implementation
-2. Info and score management 
+2. Verdict UI
