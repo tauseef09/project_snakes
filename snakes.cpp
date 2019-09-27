@@ -7,6 +7,7 @@
 #include<windows.h>
 #include<iostream>
 #include<string>
+#include "mainmenu.h"
 
 using namespace std;
 
@@ -467,32 +468,40 @@ int main()
     DWORD screenHeight = GetSystemMetrics(SM_CYSCREEN);
     initwindow(screenWidth, screenHeight, "");
 
-    int page=0;
-
-    setup();
-    while(!gameOver)
+    int check = control_menu();
+    if(check==1)
     {
-        // Double buffer pt.1
-        setactivepage(page);
-        setvisualpage(1-page);
+        cleardevice();
+        int page=0;
 
-        draw();
-        input2();
-        input();
-        logic();
-        logic2();
-        displayScore();
-
-        // Endgame condition
-        if(GetAsyncKeyState(VK_ESCAPE))
+        setup();
+        while(!gameOver)
         {
-            return 0;
+            // Double buffer pt.1
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            draw();
+            input2();
+            input();
+            logic();
+            logic2();
+            displayScore();
+
+            // Endgame condition
+            if(GetAsyncKeyState(VK_ESCAPE))
+            {
+                return 0;
+            }
+
+
+            // Double buffer pt.2
+            page=1-page;
+
         }
-
-
-        // Double buffer pt.2
-        page=1-page;
-
+    } else if(check==5)
+    {
+        return 0;
     }
 
 }
