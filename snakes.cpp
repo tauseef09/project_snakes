@@ -402,7 +402,7 @@ void logic2()
         y1= y1+10;
         break;
     }
-    setfillstyle(1,12);
+    setfillstyle(1,8);
     bar(x1,y1,x1+10,y1+10);
     for(k=0; k<2; k++)
     {
