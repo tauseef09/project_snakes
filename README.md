@@ -6,8 +6,8 @@ Tasks completed:
 4. Collision
 5. One of two gameover condtions 
 6. Second snake
+7. UI
 
 Tasks remaining:
 1. Round implementation
-2. UI
-3. Info and score management 
+2. Info and score management 
