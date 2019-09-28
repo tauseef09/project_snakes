@@ -8,7 +8,8 @@ Tasks completed:
 6. Second snake
 7. UI
 8. Info and score management 
+9. Round implementation
+10. Verdict UI
 
 Tasks remaining:
-1. Round implementation
-2. Verdict UI
+1. Boundary bug fix
