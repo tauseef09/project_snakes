@@ -12,4 +12,4 @@ Tasks completed:
 10. Verdict UI
 
 Tasks remaining:
-1. Boundary bug fix
+1. Boundary fruit bug fix
