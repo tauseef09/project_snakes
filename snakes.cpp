@@ -9,6 +9,8 @@
 #include<string>
 #include "mainmenu.h"
 
+#define Debug printf("HERE");
+
 using namespace std;
 
 bool gameOver;
@@ -461,6 +463,148 @@ void displayScore()
 }
 
 
+void displayScore2()
+{
+    char a[100];
+    sprintf(a, "SCORE: %d", score);
+    settextstyle(3,0,8);
+    outtextxy(700, 600, a);
+}
+
+
+void midRound()
+{
+    char a[100];
+    sprintf(a, "End Of Round 1!");
+    settextstyle(3,0,8);
+    outtextxy(390, 100, a);
+
+    sprintf(a, "TARGET: %d", score+1);
+    settextstyle(3,0,8);
+    outtextxy(450, 300, a);
+
+    sprintf(a, "Press SPACE to start second round");
+    settextstyle(3,0,8);
+    outtextxy(150, 500, a);
+}
+
+
+void inputR2()
+{
+    // Movement
+    if(GetAsyncKeyState(0x44))
+    {
+        if(d==2)
+        {
+            d=2;
+
+        }
+        else
+        {
+            d=1;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x41))
+    {
+        if(d==1)
+        {
+            d=1;
+
+        }
+        else
+        {
+            d=2;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x57))
+    {
+        if(d==4)
+        {
+            d=4;
+
+        }
+        else
+        {
+            d=3;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x53))
+    {
+        if(d==3)
+        {
+            d=3;
+
+        }
+        else
+        {
+            d=4;
+        }
+
+    }
+
+}
+
+
+void input2R2()
+{
+    //Second movement
+    if(GetAsyncKeyState(VK_RIGHT))
+    {
+        if(d2==2)
+        {
+            d2=2;
+
+        }
+        else
+        {
+            d2=1;
+        }
+
+    }
+    else if(GetAsyncKeyState(VK_LEFT))
+    {
+        if(d2==1)
+        {
+            d2=1;
+
+        }
+        else
+        {
+            d2=2;
+        }
+
+    }
+    else if(GetAsyncKeyState(VK_UP))
+    {
+        if(d2==4)
+        {
+            d2=4;
+
+        }
+        else
+        {
+            d2=3;
+        }
+
+    }
+    else if(GetAsyncKeyState(VK_DOWN))
+    {
+        if(d2==3)
+        {
+            d2=3;
+
+        }
+        else
+        {
+            d2=4;
+        }
+
+    }
+}
+
 int main()
 {
     int gdriver = DETECT, gmode;
@@ -471,12 +615,14 @@ int main()
     DWORD screenHeight = GetSystemMetrics(SM_CYSCREEN);
     initwindow(screenWidth, screenHeight, "", -3, -3);
 
-    int check = control_menu();
+
+    int check = control_menu(), page;
     if(check==1)
     {
         cleardevice();
-        int page=0;
+        page=0;
 
+        // Round 1
         setup();
         while(!gameOver)
         {
@@ -500,12 +646,140 @@ int main()
 
             // Double buffer pt.2
             page=1-page;
-
         }
-    } else if(check==5)
+
+
+            // Mid-round UI
+            delay(400);
+            page=0;
+            while(!GetAsyncKeyState(VK_SPACE))
+            {
+                setactivepage(page);
+                setvisualpage(1-page);
+
+                setfillstyle(1,15);
+                bar(0,0,1366,768);
+                midRound();
+                delay(100);
+
+                page=1-page;
+            }
+
+
+            // Setting the target
+            int target=score+1;
+
+
+            // Round 2
+            page=0;
+            setup();
+            while(!gameOver)
+            {
+                // Double buffer pt.1
+                setactivepage(page);
+                setvisualpage(1-page);
+
+                cleardevice();
+                draw();
+                input2R2();
+                inputR2();
+                logic();
+                logic2();
+                displayScore2();
+                char a[100];
+                sprintf(a, "TARGET: %d", target);
+                settextstyle(3,0,8);
+                outtextxy(225, 600, a);
+
+                // Endgame condition
+                if(GetAsyncKeyState(VK_ESCAPE))
+                {
+                    return 0;
+                }
+
+                if(score==target)
+                {
+                    gameOver=true;
+                }
+
+
+                // Double buffer pt.2
+                page=1-page;
+
+            }
+
+
+            // Match Verdict
+            if(score==target)
+            {
+                delay(250);
+                page=0;
+                while(!GetAsyncKeyState(VK_ESCAPE))
+                {
+                    setactivepage(page);
+                    setvisualpage(1-page);
+
+                    setfillstyle(1,15);
+                    bar(0,0,1366,768);
+                    char b[100];
+                    sprintf(b, "Player 1 wins!");
+                    settextstyle(3,0,10);
+                    outtextxy(375, 275, b);
+                    delay(100);
+
+                    page=1-page;
+                }
+                //printf("Player 1 wins!");
+
+            }
+            else if(score==target-1)
+            {
+                delay(275);
+                page=0;
+                while(!GetAsyncKeyState(VK_ESCAPE))
+                {
+                    setactivepage(page);
+                    setvisualpage(1-page);
+
+                    setfillstyle(1,15);
+                    bar(0,0,1366,768);
+                    char b[100];
+                    sprintf(b, "Match tied!");
+                    settextstyle(3,0,10);
+                    outtextxy(375, 275, b);
+                    delay(100);
+
+                    page=1-page;
+                }
+                //printf("Match tied!");
+
+            }
+            else
+            {
+                delay(250);
+                page=0;
+                while(!GetAsyncKeyState(VK_ESCAPE))
+                {
+                    setactivepage(page);
+                    setvisualpage(1-page);
+
+                    setfillstyle(1,15);
+                    bar(0,0,1366,768);
+                    char b[100];
+                    sprintf(b, "Player 2 wins!");
+                    settextstyle(3,0,10);
+                    outtextxy(375, 250, b);
+                    delay(100);
+
+                    page=1-page;
+                }
+                // printf("Player 2 wins!");
+            }
+    }
+    else if(check==5)
     {
         return 0;
     }
 
+    closegraph();
 }
-
