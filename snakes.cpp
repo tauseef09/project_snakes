@@ -10,6 +10,7 @@
 #include "mainmenu.h"
 
 
+
 #define MAX_INPUT_LEN 80
 #define Debug printf("HERE");
 
@@ -18,6 +19,9 @@ char inputbuf2[MAX_INPUT_LEN];
 int input_pos = 0;
 int input_pos2 = 0;
 
+
+
+#define Debug printf("HERE");
 
 
 using namespace std;
@@ -37,13 +41,20 @@ void setup()
     dir=0;
     d=0;
     d2=0;
+
     ntail=0;
+
+
     x = width/2;
     y = height/2;
     x1 = (width/2)+100;
     y1 = (height/2)+100;
     fruitx = (190+rand()%(width-190));
+
     fruity = (10+rand()%(height-10));
+
+    fruity = (1+rand()%(height-20));
+
     score=0;
 }
 
@@ -52,9 +63,15 @@ void draw()
     // Resetting the screen
     setfillstyle(1,15);
     bar(180,10,width-10,height-10);
+
     setfillstyle(1,0);
     bar(180,height-10,width+10,height+10); // Debugger reset bar
     setfillstyle(1,0);
+
+    setfillstyle(1,0);
+    bar(180,height-10,width+10,height+10); // Debugger reset bar
+    setfillstyle(1,0);
+
     bar(0,0,10,10); // Debugger reset bar 2
 
     // Boundaries
@@ -75,7 +92,11 @@ void draw()
         do
         {
             fruitx = (190+rand()%(width-190));
+
             fruity = (10+rand()%(height-10));
+
+            fruity = (1+rand()%(height-20));
+
         }
         while(getpixel(fruitx,fruity)!=15 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
@@ -93,7 +114,11 @@ void draw()
         do
         {
             fruitx = (190+rand()%(width-190));
+
             fruity = (10+rand()%(height-10));
+
+            fruity = (1+rand()%(height-20));
+
         }
         while(getpixel(fruitx,fruity)!=15 && fruitx>190 && fruity>10);
         fruitx=fruitx/10;
@@ -449,6 +474,8 @@ void logic2()
     for(i=0; i<ntail; i++)
     {
         if((tailx[i]==x1 && taily[i]==y1) || (x==x1 && y==y1))
+
+
         {
             gameOver=true;
         }
@@ -457,10 +484,21 @@ void logic2()
     for(i=0; i<2; i++)
     {
         if ((tailx1[i]==x && taily1[i]==y) || (x==x1 && y==y1))
+
         {
             gameOver=true;
         }
     }
+
+
+    for(i=0; i<2; i++)
+    {
+        if ((tailx1[i]==x && taily1[i]==y) || (x==x1 && y==y1))
+        {
+            gameOver=true;
+        }
+    }
+
 }
 
 
@@ -498,6 +536,22 @@ void midRound()
     outtextxy(150, 500, a);
 }
 
+void midRound()
+{
+    char a[100];
+    sprintf(a, "End Of Round 1!");
+    settextstyle(3,0,8);
+    outtextxy(390, 100, a);
+
+    sprintf(a, "TARGET: %d", score+1);
+    settextstyle(3,0,8);
+    outtextxy(450, 300, a);
+
+    sprintf(a, "Press SPACE to start second round");
+    settextstyle(3,0,8);
+    outtextxy(150, 500, a);
+}
+
 
 void inputR2()
 {
@@ -518,6 +572,55 @@ void inputR2()
     else if(GetAsyncKeyState(0x41))
     {
         if(d==1)
+
+        {
+            d=1;
+
+        }
+        else
+        {
+            d=2;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x57))
+    {
+        if(d==4)
+        {
+            d=4;
+
+        }
+        else
+        {
+            d=3;
+        }
+
+    }
+    else if(GetAsyncKeyState(0x53))
+    {
+        if(d==3)
+        {
+            d=3;
+
+        }
+        else
+        {
+            d=4;
+        }
+
+    }
+
+}
+
+
+void input2R2()
+{
+    //Second movement
+    if(GetAsyncKeyState(VK_RIGHT))
+    {
+        if(d2==2)
+        {
+
         {
             d=1;
 
@@ -614,6 +717,7 @@ void input2R2()
 
     }
 }
+
 
 void profile()
 {
@@ -715,7 +819,10 @@ int main()
         cleardevice();
         page=0;
 
+
         profile();
+
+
         // Round 1
         setup();
         while(!gameOver)
@@ -816,7 +923,11 @@ int main()
                     setfillstyle(1,15);
                     bar(0,0,1366,768);
                     char b[100];
+
                     sprintf(b, "%s wins!", inputbuf);
+
+                    sprintf(b, "Player 1 wins!");
+
                     settextstyle(3,0,10);
                     outtextxy(375, 275, b);
                     delay(100);
@@ -860,7 +971,11 @@ int main()
                     setfillstyle(1,15);
                     bar(0,0,1366,768);
                     char b[100];
+
                     sprintf(b, "%s wins!", inputbuf2);
+
+                    sprintf(b, "Player 2 wins!");
+
                     settextstyle(3,0,10);
                     outtextxy(375, 250, b);
                     delay(100);
@@ -876,6 +991,5 @@ int main()
     }
 
     closegraph();
-
 }
 
