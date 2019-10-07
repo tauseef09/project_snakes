@@ -65,7 +65,7 @@ void draw()
     bar(width-10,10,width,height); // right bar
 
     // fruit
-    if((fruitx>=x && fruitx<=x+10) &&(fruity>=y && fruity<=y+10))
+    if((fruitx>=x && fruitx<=x+10) && (fruity>=y && fruity<=y+10) || (fruitx+7>=x && fruitx+7<=x+10) && (fruity+7>=y && fruity+7<=y+10))
     {
 
         ntail++;
@@ -84,7 +84,7 @@ void draw()
         fruity=fruity*10;
 
     }
-    else if((fruitx>=x1 && fruitx<=x1+10) &&(fruity>=y1 && fruity<=y1+10))
+    else if((fruitx>=x1 && fruitx<=x1+10) && (fruity>=y1 && fruity<=y1+10) || (fruitx+7>=x1 && fruitx+7<=x1+10) && (fruity+7>=y1 && fruity+7<=y1+10))
     {
         score=score+1;
         setfillstyle(1,15);
