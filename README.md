@@ -10,6 +10,3 @@ Tasks completed:
 8. Info and score management 
 9. Round implementation
 10. Verdict UI
-
-Tasks remaining:
-1. Boundary fruit bug fix
