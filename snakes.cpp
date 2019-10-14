@@ -1,3 +1,5 @@
+// Continuous gaming, include everything in functions
+
 #include<stdio.h>
 #include<graphics.h>
 #include<conio.h>
@@ -11,6 +13,7 @@
 
 
 #define MAX_INPUT_LEN 80
+#define TIMER 260
 #define Debug printf("HERE");
 
 char inputbuf[MAX_INPUT_LEN];
@@ -28,6 +31,8 @@ int height = 560;
 int x, y, x1, y1, i, j, k, score, fruitx, fruity, dir, d, d2, dirP2;
 int tailx[1000], taily[1000], tailx1[5], taily1[5];
 int ntail;
+
+int timer=0;
 
 void setup()
 {
@@ -65,10 +70,18 @@ void draw()
     bar(width-10,10,width,height); // right bar
 
     // fruit
-    if((fruitx>=x && fruitx<=x+10) && (fruity>=y && fruity<=y+10) || (fruitx+7>=x && fruitx+7<=x+10) && (fruity+7>=y && fruity+7<=y+10))
+    if((fruitx>=x && fruitx<=x+10) && (fruity>=y && fruity<=y+10) || (fruitx+7>=x && fruitx+7<=x+10) && (fruity+7>=y && fruity+7<=y+10) || timer>=TIMER)
     {
+        if((fruitx>=x && fruitx<=x+10) && (fruity>=y && fruity<=y+10) || (fruitx+7>=x && fruitx+7<=x+10) && (fruity+7>=y && fruity+7<=y+10))
+        {
+            ntail++;
+            timer=0;
 
-        ntail++;
+        }
+        else if(timer>=TIMER)
+        {
+            timer=0;
+        }
         setfillstyle(1,15);
         bar(fruitx, fruity, fruitx+7, fruity+7);
 
@@ -84,9 +97,18 @@ void draw()
         fruity=fruity*10;
 
     }
-    else if((fruitx>=x1 && fruitx<=x1+10) && (fruity>=y1 && fruity<=y1+10) || (fruitx+7>=x1 && fruitx+7<=x1+10) && (fruity+7>=y1 && fruity+7<=y1+10))
+    else if((fruitx>=x1 && fruitx<=x1+10) && (fruity>=y1 && fruity<=y1+10) || (fruitx+7>=x1 && fruitx+7<=x1+10) && (fruity+7>=y1 && fruity+7<=y1+10) || timer>=TIMER)
     {
-        score=score+1;
+        if((fruitx>=x1 && fruitx<=x1+10) && (fruity>=y1 && fruity<=y1+10) || (fruitx+7>=x1 && fruitx+7<=x1+10) && (fruity+7>=y1 && fruity+7<=y1+10))
+        {
+            score=score+1;
+            timer=0;
+
+        }
+        else if(timer>=TIMER)
+        {
+            timer=0;
+        }
         setfillstyle(1,15);
         bar(fruitx, fruity, fruitx+7, fruity+7);
 
@@ -269,7 +291,7 @@ void logic()
         y=10;
     }
 
-    // Game over condition
+    // Size renew condition
     for(i=0; i<ntail; i++)
     {
         if(tailx[i]==x && taily[i]==y)
@@ -618,81 +640,83 @@ void input2R2()
 void profile()
 {
     int the_end = 0;
-do
-{
+    do
+    {
 
 
-    settextstyle(3,0,6);
-    outtextxy ((1366/2)-450,(768/2)-200, "Player 1 (Arrows) Name: ");
-    settextstyle(3, 0, 6);
-   outtextxy ((1366/2)+140,(768/2)-200, inputbuf);
-char   c = getch();
-   switch (c)
-   {
+        settextstyle(3,0,6); // 3- font 0- horizontal, 6- size
+        outtextxy ((1366/2)-450,(768/2)-200, "Player 1 (Arrows) Name: ");
+        settextstyle(3, 0, 6);
+        outtextxy ((1366/2)+140,(768/2)-200, inputbuf);
+        char   c = getch();
+        switch (c)
+        {
         case 8: /* backspace */
-          if (input_pos)
-          {
-             input_pos--;
-             inputbuf[input_pos]='_';
+            if (input_pos)
+            {
+                input_pos--;
+                inputbuf[input_pos]='_';
 
-             //inputbuf[input_pos] = 0;
-          }
-          break;
+                //inputbuf[input_pos] = 0;
+            }
+            break;
         case 13: /* return */
-          the_end = 1;
-          break;
+            the_end = 1;
+            break;
         case 27: /* Escape = Abort */
-          inputbuf[0] = 0;
-          the_end = 1;
-          break;
+            inputbuf[0] = 0;
+            the_end = 1;
+            break;
         default:
-          if (input_pos < MAX_INPUT_LEN-1 && c >= ' ' && c <= '~')
-          {
-             inputbuf[input_pos] = c;
-             input_pos++;
-             //inputbuf[input_pos] = 0;
-          }
-   }
-} while (!the_end);
-printf("%s", inputbuf);
+            if (input_pos < MAX_INPUT_LEN-1 && c >= ' ' && c <= '~')
+            {
+                inputbuf[input_pos] = c;
+                input_pos++;
+                //inputbuf[input_pos] = 0;
+            }
+        }
+    }
+    while (!the_end);
+    printf("%s", inputbuf);
 
 
-int the_end2 = 0;
-do
-{
-    settextstyle(3,0,6);
-    outtextxy ((1366/2)-450,(768/2), "Player 2 (ASDW) Name: ");
-    settextstyle(3, 0, 6);
-   outtextxy ((1366/2)+140,(768/2), inputbuf2);
-char   c = getch();
-   switch (c)
-   {
+    int the_end2 = 0;
+    do
+    {
+        settextstyle(3,0,6);
+        outtextxy ((1366/2)-450,(768/2), "Player 2 (ASDW) Name: ");
+        settextstyle(3, 0, 6);
+        outtextxy ((1366/2)+140,(768/2), inputbuf2);
+        char   c = getch();
+        switch (c)
+        {
         case 8: /* backspace */
-          if (input_pos2)
-          {
-             input_pos2--;
-             inputbuf2[input_pos2]='_';
+            if (input_pos2)
+            {
+                input_pos2--;
+                inputbuf2[input_pos2]='_';
 
-             //inputbuf2[input_pos2] = 0;
-          }
-          break;
+                //inputbuf2[input_pos2] = 0;
+            }
+            break;
         case 13: /* return */
-          the_end2 = 1;
-          break;
+            the_end2 = 1;
+            break;
         case 27: /* Escape = Abort */
-          inputbuf2[0] = 0;
-          the_end2 = 1;
-          break;
+            inputbuf2[0] = 0;
+            the_end2 = 1;
+            break;
         default:
-          if (input_pos2 < MAX_INPUT_LEN-1 && c >= ' ' && c <= '~')
-          {
-             inputbuf2[input_pos2] = c;
-             input_pos2++;
-             //inputbuf2[input_pos2] = 0;
-          }
-   }
-} while (!the_end2);
-printf("%s", inputbuf2);
+            if (input_pos2 < MAX_INPUT_LEN-1 && c >= ' ' && c <= '~')
+            {
+                inputbuf2[input_pos2] = c;
+                input_pos2++;
+                //inputbuf2[input_pos2] = 0;
+            }
+        }
+    }
+    while (!the_end2);
+    printf("%s", inputbuf2);
 
 
 
@@ -709,7 +733,9 @@ int main()
     initwindow(screenWidth, screenHeight, "", -3, -3);
 
 
-    int check = control_menu(), page;
+fromHelp:
+    int check = control_menu(), page, prompt=0;
+    int seriesCount1=0, seriesCount2=0;
     if(check==1)
     {
         cleardevice();
@@ -717,6 +743,13 @@ int main()
 
         profile();
         // Round 1
+start:
+        if(prompt==1)
+        {
+            cleardevice();
+            page=0;
+        }
+
         setup();
         while(!gameOver)
         {
@@ -734,146 +767,298 @@ int main()
             // Endgame condition
             if(GetAsyncKeyState(VK_ESCAPE))
             {
-                return 0;
+                goto seriesVerdict;
             }
 
+            timer++;
+            // printf("%d\n", timer);
 
             // Double buffer pt.2
             page=1-page;
         }
 
 
-            // Mid-round UI
-            delay(400);
+        // Mid-round UI
+        delay(400);
+        page=0;
+        while(!GetAsyncKeyState(VK_SPACE))
+        {
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            setfillstyle(1,15);
+            bar(0,0,1366,768);
+            midRound();
+            delay(100);
+
+            page=1-page;
+        }
+
+
+        // Setting the target
+        int target=score+1;
+
+
+        // Round 2
+        page=0;
+        setup();
+        while(!gameOver)
+        {
+            // Double buffer pt.1
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            cleardevice();
+            draw();
+            input2R2();
+            inputR2();
+            logic();
+            logic2();
+            displayScore2();
+            char a[100];
+            sprintf(a, "TARGET: %d", target);
+            settextstyle(3,0,8);
+            outtextxy(225, 600, a);
+
+            // Endgame condition
+            if(GetAsyncKeyState(VK_ESCAPE))
+            {
+                return 0;
+            }
+
+            if(score==target)
+            {
+                gameOver=true;
+            }
+
+            timer++;
+
+            // Double buffer pt.2
+            page=1-page;
+
+        }
+
+
+        // Match Verdict
+        if(score==target)
+        {
+            seriesCount1++;
+            delay(250);
             page=0;
-            while(!GetAsyncKeyState(VK_SPACE))
+            while(!GetAsyncKeyState(VK_ESCAPE))
             {
                 setactivepage(page);
                 setvisualpage(1-page);
 
-                setfillstyle(1,15);
+                setfillstyle(1,0);
                 bar(0,0,1366,768);
-                midRound();
+                char b[100];
+                sprintf(b, "%s wins!", inputbuf); //Player 1 wins
+                settextstyle(3,0,10);
+                outtextxy(375, 200, b);
+                sprintf(b, "Series stands as, %s: %d and %s: %d", inputbuf, seriesCount1, inputbuf2, seriesCount2);
+                settextstyle(3,0,8);
+                outtextxy(175, 250+220, b);
                 delay(100);
 
                 page=1-page;
             }
 
+            prompt=1;
+            goto start;
+            //printf("Player 1 wins!");
 
-            // Setting the target
-            int target=score+1;
-
-
-            // Round 2
+        }
+        else if(score==target-1)
+        {
+            delay(275);
             page=0;
-            setup();
-            while(!gameOver)
+            while(!GetAsyncKeyState(VK_ESCAPE))
             {
-                // Double buffer pt.1
                 setactivepage(page);
                 setvisualpage(1-page);
 
-                cleardevice();
-                draw();
-                input2R2();
-                inputR2();
-                logic();
-                logic2();
-                displayScore2();
-                char a[100];
-                sprintf(a, "TARGET: %d", target);
+                setfillstyle(1,0);
+                bar(0,0,1366,768);
+                char b[100];
+                sprintf(b, "Match tied!");
+                settextstyle(3,0,10);
+                outtextxy(375, 200, b);
+                sprintf(b, "Series stands as, %s: %d and %s: %d", inputbuf, seriesCount1, inputbuf2, seriesCount2);
                 settextstyle(3,0,8);
-                outtextxy(225, 600, a);
+                outtextxy(175, 250+220, b);
+                delay(100);
 
-                // Endgame condition
-                if(GetAsyncKeyState(VK_ESCAPE))
-                {
-                    return 0;
-                }
-
-                if(score==target)
-                {
-                    gameOver=true;
-                }
-
-
-                // Double buffer pt.2
                 page=1-page;
-
             }
 
+            prompt=1;
+            goto start;
 
-            // Match Verdict
-            if(score==target)
+            //printf("Match tied!");
+
+        }
+        else
+        {
+            seriesCount2++;
+            delay(250);
+            page=0;
+            while(!GetAsyncKeyState(VK_ESCAPE))
             {
-                delay(250);
-                page=0;
-                while(!GetAsyncKeyState(VK_ESCAPE))
-                {
-                    setactivepage(page);
-                    setvisualpage(1-page);
+                setactivepage(page);
+                setvisualpage(1-page);
 
-                    setfillstyle(1,15);
-                    bar(0,0,1366,768);
-                    char b[100];
-                    sprintf(b, "%s wins!", inputbuf); //Player 1 wins
-                    settextstyle(3,0,10);
-                    outtextxy(375, 275, b);
-                    delay(100);
+                setfillstyle(1,0);
+                bar(0,0,1366,768);
+                char b[100];
+                sprintf(b, "%s wins the match!", inputbuf2); // Player 2 wins
+                settextstyle(3,0,10);
+                outtextxy(375, 200, b);
+                sprintf(b, "Series stands as, %s: %d and %s: %d", inputbuf, seriesCount1, inputbuf2, seriesCount2);
+                settextstyle(3,0,8);
+                outtextxy(175, 250+220, b);
+                delay(100);
 
-                    page=1-page;
-                }
-                //printf("Player 1 wins!");
-
+                page=1-page;
             }
-            else if(score==target-1)
-            {
-                delay(275);
-                page=0;
-                while(!GetAsyncKeyState(VK_ESCAPE))
-                {
-                    setactivepage(page);
-                    setvisualpage(1-page);
+            // printf("Player 2 wins!");
+        }
+        prompt=1;
+        goto start;
 
-                    setfillstyle(1,15);
-                    bar(0,0,1366,768);
-                    char b[100];
-                    sprintf(b, "Match tied!");
-                    settextstyle(3,0,10);
-                    outtextxy(375, 275, b);
-                    delay(100);
-
-                    page=1-page;
-                }
-                //printf("Match tied!");
-
-            }
-            else
-            {
-                delay(250);
-                page=0;
-                while(!GetAsyncKeyState(VK_ESCAPE))
-                {
-                    setactivepage(page);
-                    setvisualpage(1-page);
-
-                    setfillstyle(1,15);
-                    bar(0,0,1366,768);
-                    char b[100];
-                    sprintf(b, "%s wins!", inputbuf2); // Player 2 wins
-                    settextstyle(3,0,10);
-                    outtextxy(375, 250, b);
-                    delay(100);
-
-                    page=1-page;
-                }
-                // printf("Player 2 wins!");
-            }
     }
-    else if(check==5)
+    else if(check==2)
+    {
+        // help page
+        delay(275);
+        while(!GetAsyncKeyState(VK_ESCAPE))
+        {
+
+            setfillstyle(1,0);
+            bar(0,0,1366,768);
+            char b[1000];
+            int space=0;
+
+
+            sprintf(b, "1. Player 1 plays with arrows");
+            settextstyle(3,0,6);
+            outtextxy(20, 20, b);
+            space+=80;
+
+            sprintf(b, "2. Player 2 plays with WASD");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "3. Food increases green snake's size");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "4. Food increases red snake's score");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "5. Roles switch after round 1");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "6. Objective is to beat the target");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "7. Chasing (or not) wins (or loses) you the match");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            sprintf(b, "8. Winning more matches wins you the series");
+            settextstyle(3,0,6);
+            outtextxy(20, 20+space, b);
+            space+=80;
+
+            delay(500);
+
+        }
+
+        goto fromHelp;
+    }
+    else if(check==4)
     {
         return 0;
     }
+
+
+seriesVerdict:
+    // Series verdict
+    if(seriesCount1>seriesCount2)
+    {
+        cleardevice();
+        delay(275);
+        page=0;
+        while(!GetAsyncKeyState(VK_ESCAPE))
+        {
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            setfillstyle(1,0);
+            bar(0,0,1366,768);
+            char b[100];
+            sprintf(b, "%s wins the series!", inputbuf); // Player 1 wins
+            settextstyle(3,0,10);
+            outtextxy(375, 250, b);
+            delay(100);
+
+            page=1-page;
+        }
+
+    }
+    else if(seriesCount1<seriesCount2)
+    {
+        cleardevice();
+        delay(275);
+        page=0;
+        while(!GetAsyncKeyState(VK_ESCAPE))
+        {
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            setfillstyle(1,0);
+            bar(0,0,1366,768);
+            char b[100];
+            sprintf(b, "%s wins the series!", inputbuf2); // Player 2 wins
+            settextstyle(3,0,10);
+            outtextxy(375, 250, b);
+            delay(100);
+
+            page=1-page;
+
+        }
+
+    }
+    else if(seriesCount1==seriesCount2)
+    {
+        cleardevice();
+        delay(275);
+        page=0;
+        while(!GetAsyncKeyState(VK_ESCAPE))
+        {
+            setactivepage(page);
+            setvisualpage(1-page);
+
+            setfillstyle(1,0);
+            bar(0,0,1366,768);
+            char b[100];
+            sprintf(b, "Series tied!");
+            settextstyle(3,0,10);
+            outtextxy(375, 250, b);
+            delay(100);
+        }
+    }
+
 
     closegraph();
 
