@@ -5,24 +5,24 @@
 #include<graphics.h>
 
 #define pixTOrc(x) (8*(x-1))
-#define INC 7
+#define INC 10
 #define ROW 40
 #define COL 70
-#define MAXITEM 4
+#define MAXITEM 3
 
 typedef char option[15];
 
 //Menu Global Item #define pixTOrc(x) (8*(x-1))  //convert pixel into row and col format #define INC 5  //Increment Distance Between Menu Items #define ROW 15 //Row Value for Menu Item #define COL 8 //Column Value for Menu Item#define MAXITEM 4 //Total menu items// To display the Inventory Main menu options
 option mainMenu[]= {
   "START",
-  "PROFILES",
+  //"PROFILES",
  "HELP",
  "CLOSE"
 };
 
 
 
-// Function to displays all the menu prompt messages from the pointer array of option a[]
+// Function that displays all the menu prompt messages from the pointer array of option a[]
 void normalvideo(int x,int y,char *str)
 {
     x=pixTOrc(x);
@@ -110,16 +110,14 @@ int control_menu()
                return 2;
 
 
-           case'3':    //Profiles
-               return 3;
+           case'3':    //Modify the status of item in inventory
 
 
-           case'4':    //Modify the status of item in inventory
-
-
-           case'5':    //Close
-               return 5;
+           case'4':    //Close
+               return 4;
 
        }
       } while (choice != MAXITEM);
 }
+
+
